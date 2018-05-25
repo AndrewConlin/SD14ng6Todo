@@ -1,0 +1,16 @@
+.green {
+  background-color: darkseagreen
+}
+
+.yellow {
+  background-color: burlywood
+}
+
+.red {
+  background-color: lightcoral
+}
+
+.strikeout {
+  color: lightslategray;
+  text-decoration: line-through;
+}

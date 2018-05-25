@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './models/todo';
 import { HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -34,7 +36,12 @@ export class TodoService {
       );
   }
 
-  update(todo) {
+  update(todo: Todo) {
+    if (todo.completed) {
+      todo.completeDate = this.datePipe.transform(Date.now(), 'shortDate');
+    } else {
+      todo.completeDate = '';
+    }
     return this.http.put<Todo>(this.url + '/' + todo.id, todo)
         .pipe(
           catchError((err: any) => {
@@ -55,6 +62,9 @@ export class TodoService {
   }
 
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private datePipe: DatePipe
+  ) { }
 
 }

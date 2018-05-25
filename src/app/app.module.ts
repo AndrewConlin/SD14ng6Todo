@@ -8,11 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoService } from './todo.service';
+import { DatePipe } from '@angular/common';
+import { IncompletePipe } from './incomplete.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoListComponent
+    TodoListComponent,
+    IncompletePipe
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,9 @@ import { TodoService } from './todo.service';
     HttpClientModule
    ],
   providers: [
-    TodoService
+    TodoService,
+    DatePipe,
+    IncompletePipe
   ],
   bootstrap: [AppComponent]
 })
