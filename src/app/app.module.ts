@@ -10,12 +10,28 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoService } from './todo.service';
 import { DatePipe } from '@angular/common';
 import { IncompletePipe } from './incomplete.pipe';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
-    IncompletePipe
+    IncompletePipe,
+    HomeComponent,
+    AboutComponent,
+    ContactComponent,
+    NavigationComponent,
+    NotFoundComponent,
+    LoginComponent,
+    LogoutComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

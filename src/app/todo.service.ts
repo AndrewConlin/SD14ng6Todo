@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './models/todo';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +16,34 @@ export class TodoService {
   private url = 'http://localhost:8080/api/todos';
 
   index() {
-    return this.http.get<Todo[]>(this.url)
+    if (!this.authSerivce.checkLogin()) {
+      this.router.navigateByUrl('login');
+    }
+
+    const token = this.authSerivce.getToken();
+    const headers = new HttpHeaders()
+      .set('Authorization', `Basic ${token}`);
+
+    return this.http.get<Todo[]>(this.url, {headers})
         .pipe(
             catchError((err: any) => {
               console.log(err);
               return throwError('KABOOM');
             })
+        );
+  }
+
+  show(id: number) {
+    const token = this.authSerivce.getToken();
+    const headers = new HttpHeaders()
+      .set('Authorization', `Basic ${token}`);
+
+    return this.http.get<Todo>(this.url + '/' + id, {headers})
+        .pipe(
+          catchError((err: any) => {
+            console.log(err);
+            return throwError('KABOOM');
+          })
         );
   }
 
@@ -64,7 +88,9 @@ export class TodoService {
 
   constructor(
     private http: HttpClient,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authSerivce: AuthService,
+    private router: Router
   ) { }
 
 }
